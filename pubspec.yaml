@@ -11,7 +11,11 @@ dependencies:
     sdk: flutter
   http: ^1.2.0
   home_widget: ^0.6.0
-  workmanager: ^0.5.2
+  # 0.5.x still referenced Flutter's v1 embedding shim (ShimPluginRegistry,
+  # PluginRegistry.Registrar), which no longer exists in the engine and broke
+  # :workmanager:compileDebugKotlin. 0.6.0 dropped the v1 APIs; 0.10.x is the
+  # current federated release.
+  workmanager: ^0.10.7
 
 dev_dependencies:
   flutter_test:

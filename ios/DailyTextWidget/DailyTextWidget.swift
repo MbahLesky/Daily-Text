@@ -10,7 +10,7 @@ struct DailyTextEntry: TimelineEntry {
 struct DailyTextProvider: TimelineProvider {
     // Must match HomeWidgetService._iOSAppGroupId on the Dart side and the
     // App Group capability added to both the app and widget targets in Xcode.
-    let appGroupId = "group.com.example.jwDailyTextWidget"
+    let appGroupId = "group.com.lespadev.jwdailytextwidget"
 
     func placeholder(in context: Context) -> DailyTextEntry {
         DailyTextEntry(date: Date(), scripture: "Loading…", comment: "")

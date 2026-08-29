@@ -8,7 +8,7 @@ import '../../features/daily_text/data/daily_text.dart';
 /// Android-only for this MVP pass. iOS App Group wiring returns in a later
 /// phase (see docs/IMPLEMENTATION_PLAN.md, Section 7) alongside the
 /// ios/DailyTextWidget WidgetKit stub, which already expects the App Group
-/// id `group.com.example.jwDailyTextWidget`.
+/// id `group.com.lespadev.jwdailytextwidget`.
 class HomeWidgetService {
   const HomeWidgetService._();
 

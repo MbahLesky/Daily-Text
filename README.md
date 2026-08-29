@@ -14,11 +14,11 @@ Flutter SDK was available when this was written. See
 
 Run these once you have the Flutter SDK installed:
 
-1. `flutter create . --platforms=android` — do **not** pass a custom
-   `--org`; the default `com.example` must match the existing Kotlin
-   package (`com.example.jw_daily_text_widget`) and the iOS App Group id,
-   or the hand-written native files won't line up with what gets
-   generated. Scoping to `--platforms=android` avoids generating
+1. `flutter create . --platforms=android --org com.lespadev` — the org must
+   match the existing Kotlin package (`com.lespadev.jwdailytextwidget`), the
+   `namespace`/`applicationId` in `android/app/build.gradle.kts`, and the iOS
+   App Group id, or the hand-written native files won't line up with what
+   gets generated. Scoping to `--platforms=android` avoids generating
    `ios/Runner`/Xcode project files until Phase 2 iOS work starts.
    `flutter create .` won't overwrite existing files (`pubspec.yaml`,
    `lib/main.dart`, the Kotlin/XML files) — it only fills in what's
@@ -42,6 +42,6 @@ Run these once you have the Flutter SDK installed:
    widget resize).
 8. When resuming iOS work (Phase 2): re-add an iOS-aware `configure()`/App
    Group call to `HomeWidgetService`, and wire the App Group
-   `group.com.example.jwDailyTextWidget` on both the Runner app target and
+   `group.com.lespadev.jwdailytextwidget` on both the Runner app target and
    the `ios/DailyTextWidget` extension target in Xcode — the existing
    Swift stub already expects that exact App Group id.

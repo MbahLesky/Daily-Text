@@ -1,4 +1,4 @@
-package com.example.jw_daily_text_widget
+package com.lespadev.jwdailytextwidget
 
 import android.app.PendingIntent
 import android.content.Context
