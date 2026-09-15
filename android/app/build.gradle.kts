@@ -19,9 +19,9 @@ android {
         // the provider class as "${context.packageName}.DailyTextWidgetProvider"
         // from the androidName passed in HomeWidgetService.updateWidget.
         applicationId = "com.lespadev.jwdailytextwidget"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        // 23+ is required for PendingIntent.FLAG_IMMUTABLE, used in
+        // WidgetTapHandler.kt for the widget's tap-to-open PendingIntent.
+        minSdk = maxOf(flutter.minSdkVersion, 23)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
