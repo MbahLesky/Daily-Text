@@ -15,7 +15,7 @@ void callbackDispatcher() {
     if (task != dailyTextRefreshTask) return true;
 
     try {
-      final dailyText = await const DailyTextService().fetchDailyText();
+      final dailyText = await DailyTextService().fetchDailyText();
       await HomeWidgetService.updateWidget(dailyText);
       return true;
     } catch (_) {

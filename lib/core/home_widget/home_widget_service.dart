@@ -1,24 +1,39 @@
+import 'package:flutter/foundation.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:intl/intl.dart';
 
 import '../../features/daily_text/data/daily_text.dart';
 
 /// Writes the daily text into the shared storage the native Android widget
 /// reads from, then asks the OS to redraw it.
-///
-/// Android-only for this MVP pass. iOS App Group wiring returns in a later
-/// phase (see docs/IMPLEMENTATION_PLAN.md, Section 7) alongside the
-/// ios/DailyTextWidget WidgetKit stub, which already expects the App Group
-/// id `group.com.lespadev.jwdailytextwidget`.
 class HomeWidgetService {
   const HomeWidgetService._();
 
   static const _androidWidgetProviderName = 'DailyTextWidgetProvider';
 
-  /// Persists [dailyText] to shared storage and triggers a widget refresh.
+  /// Persists [dailyText] to shared storage and triggers an Android widget refresh.
+  /// Safely handles web or unsupported platforms.
   static Future<void> updateWidget(DailyText dailyText) async {
-    for (final entry in dailyText.toWidgetData().entries) {
-      await HomeWidget.saveWidgetData<String>(entry.key, entry.value);
+    if (kIsWeb) {
+      // Home widgets are Android/iOS native features; skip on web platform
+      return;
     }
-    await HomeWidget.updateWidget(androidName: _androidWidgetProviderName);
+
+    try {
+      for (final entry in dailyText.toWidgetData().entries) {
+        await HomeWidget.saveWidgetData<String>(entry.key, entry.value);
+      }
+
+      // Save formatted dateTitle for widget header
+      final dateDisplay = dailyText.dateTitle.isNotEmpty
+          ? dailyText.dateTitle
+          : DateFormat('EEEE, MMMM d').format(dailyText.date);
+      await HomeWidget.saveWidgetData<String>('dateTitle', dateDisplay);
+
+      await HomeWidget.updateWidget(androidName: _androidWidgetProviderName);
+      debugPrint('HomeWidgetService: Successfully updated home screen widget');
+    } catch (e) {
+      debugPrint('HomeWidgetService: Failed to update native widget: $e');
+    }
   }
 }
