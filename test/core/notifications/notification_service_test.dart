@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jw_daily_text_widget/core/notifications/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';

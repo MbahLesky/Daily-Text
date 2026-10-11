@@ -95,7 +95,7 @@ class ThemeProvider extends ChangeNotifier {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
-            color: const Color(0xFF2C4D75).withOpacity(0.15),
+            color: const Color(0xFF2C4D75).withValues(alpha: 0.15),
             width: 1,
           ),
         ),
@@ -136,7 +136,7 @@ class ThemeProvider extends ChangeNotifier {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
-            color: const Color(0xFF7EA9DE).withOpacity(0.25),
+            color: const Color(0xFF7EA9DE).withValues(alpha: 0.25),
             width: 1,
           ),
         ),

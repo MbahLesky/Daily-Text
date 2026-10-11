@@ -14,7 +14,6 @@ import 'core/notifications/notification_service.dart';
 import 'core/theme/theme_provider.dart';
 import 'core/tts/daily_text_tts_service.dart';
 import 'features/daily_text/data/daily_text.dart';
-import 'features/daily_text/data/daily_text_cache_manager.dart';
 import 'features/daily_text/data/daily_text_service.dart';
 import 'features/favorites/data/favorites_database.dart';
 import 'features/favorites/presentation/favorites_screen.dart';
@@ -278,7 +277,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                       width: 36,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.4),
+                        color: Colors.grey.withValues(alpha: 0.4),
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -289,7 +288,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF2C4D75).withOpacity(0.12),
+                          color: const Color(0xFF2C4D75).withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Icon(Icons.record_voice_over, color: Color(0xFF2C4D75)),
@@ -494,7 +493,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                   width: 36,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.4),
+                    color: Colors.grey.withValues(alpha: 0.4),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -505,7 +504,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF2C4D75).withOpacity(0.12),
+                      color: const Color(0xFF2C4D75).withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Icon(Icons.share, color: Color(0xFF2C4D75)),
@@ -534,7 +533,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                 leading: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF2C4D75).withOpacity(0.1),
+                    color: const Color(0xFF2C4D75).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.menu_book, color: Color(0xFF2C4D75)),
@@ -555,7 +554,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                 leading: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFB57C2F).withOpacity(0.12),
+                    color: const Color(0xFFB57C2F).withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.format_quote, color: Color(0xFFB57C2F)),
@@ -576,7 +575,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                 leading: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.12),
+                    color: Colors.grey.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(Icons.copy, color: Colors.grey),
@@ -622,7 +621,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                   width: 36,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.4),
+                    color: Colors.grey.withValues(alpha: 0.4),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -633,7 +632,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.primary.withOpacity(0.12),
+                      color: theme.colorScheme.primary.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Icon(
@@ -667,8 +666,8 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: isDark
-                        ? const Color(0xFF7EA9DE).withOpacity(0.15)
-                        : Colors.grey.withOpacity(0.1),
+                        ? const Color(0xFF7EA9DE).withValues(alpha: 0.15)
+                        : Colors.grey.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -698,56 +697,55 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
               ),
               const SizedBox(height: 6),
-              RadioListTile<ThemeMode>(
-                contentPadding: EdgeInsets.zero,
-                value: ThemeMode.system,
+              RadioGroup<ThemeMode>(
                 groupValue: currentMode,
-                title: const Text(
-                  'System Default',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
-                ),
-                subtitle: const Text(
-                  'Automatically matches device system theme',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-                secondary: const Icon(Icons.brightness_auto),
                 onChanged: (mode) {
                   if (mode != null) themeProvider.setThemeMode(mode);
                 },
-              ),
-              RadioListTile<ThemeMode>(
-                contentPadding: EdgeInsets.zero,
-                value: ThemeMode.light,
-                groupValue: currentMode,
-                title: const Text(
-                  'Light',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                child: const Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RadioListTile<ThemeMode>(
+                      contentPadding: EdgeInsets.zero,
+                      value: ThemeMode.system,
+                      title: Text(
+                        'System Default',
+                        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                      ),
+                      subtitle: Text(
+                        'Automatically matches device system theme',
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                      secondary: Icon(Icons.brightness_auto),
+                    ),
+                    RadioListTile<ThemeMode>(
+                      contentPadding: EdgeInsets.zero,
+                      value: ThemeMode.light,
+                      title: Text(
+                        'Light',
+                        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                      ),
+                      subtitle: Text(
+                        'Bright and clean reading background',
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                      secondary: Icon(Icons.light_mode, color: Color(0xFFB57C2F)),
+                    ),
+                    RadioListTile<ThemeMode>(
+                      contentPadding: EdgeInsets.zero,
+                      value: ThemeMode.dark,
+                      title: Text(
+                        'Dark',
+                        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+                      ),
+                      subtitle: Text(
+                        'Soft dark colors, comfortable for nighttime reading',
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                      secondary: Icon(Icons.dark_mode, color: Color(0xFF7EA9DE)),
+                    ),
+                  ],
                 ),
-                subtitle: const Text(
-                  'Bright and clean reading background',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-                secondary: const Icon(Icons.light_mode, color: Color(0xFFB57C2F)),
-                onChanged: (mode) {
-                  if (mode != null) themeProvider.setThemeMode(mode);
-                },
-              ),
-              RadioListTile<ThemeMode>(
-                contentPadding: EdgeInsets.zero,
-                value: ThemeMode.dark,
-                groupValue: currentMode,
-                title: const Text(
-                  'Dark',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
-                ),
-                subtitle: const Text(
-                  'Soft dark colors, comfortable for nighttime reading',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-                secondary: const Icon(Icons.dark_mode, color: Color(0xFF7EA9DE)),
-                onChanged: (mode) {
-                  if (mode != null) themeProvider.setThemeMode(mode);
-                },
               ),
               const SizedBox(height: 16),
               Align(
@@ -796,7 +794,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                     width: 36,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.4),
+                      color: Colors.grey.withValues(alpha: 0.4),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -807,7 +805,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primary.withOpacity(0.12),
+                        color: theme.colorScheme.primary.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(Icons.settings, color: theme.colorScheme.primary),
@@ -835,10 +833,10 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                 // SECTION 1: Appearance & Dark Mode
                 Card(
                   elevation: 0,
-                  color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.4),
+                  color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
-                    side: BorderSide(color: theme.colorScheme.primary.withOpacity(0.15)),
+                    side: BorderSide(color: theme.colorScheme.primary.withValues(alpha: 0.15)),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -878,41 +876,40 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                           style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Colors.grey),
                         ),
                         const SizedBox(height: 6),
-                        RadioListTile<ThemeMode>(
-                          contentPadding: EdgeInsets.zero,
-                          dense: true,
-                          value: ThemeMode.system,
+                        RadioGroup<ThemeMode>(
                           groupValue: currentMode,
-                          title: const Text('System Default'),
-                          subtitle: const Text('Follows system appearance setting', style: TextStyle(fontSize: 12)),
-                          secondary: const Icon(Icons.brightness_auto, size: 20),
                           onChanged: (mode) {
                             if (mode != null) themeProvider.setThemeMode(mode);
                           },
-                        ),
-                        RadioListTile<ThemeMode>(
-                          contentPadding: EdgeInsets.zero,
-                          dense: true,
-                          value: ThemeMode.light,
-                          groupValue: currentMode,
-                          title: const Text('Light'),
-                          subtitle: const Text('Clean and bright appearance', style: TextStyle(fontSize: 12)),
-                          secondary: const Icon(Icons.light_mode, size: 20, color: Color(0xFFB57C2F)),
-                          onChanged: (mode) {
-                            if (mode != null) themeProvider.setThemeMode(mode);
-                          },
-                        ),
-                        RadioListTile<ThemeMode>(
-                          contentPadding: EdgeInsets.zero,
-                          dense: true,
-                          value: ThemeMode.dark,
-                          groupValue: currentMode,
-                          title: const Text('Dark'),
-                          subtitle: const Text('Soft dark appearance for night reading', style: TextStyle(fontSize: 12)),
-                          secondary: const Icon(Icons.dark_mode, size: 20, color: Color(0xFF7EA9DE)),
-                          onChanged: (mode) {
-                            if (mode != null) themeProvider.setThemeMode(mode);
-                          },
+                          child: const Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              RadioListTile<ThemeMode>(
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                value: ThemeMode.system,
+                                title: Text('System Default'),
+                                subtitle: Text('Follows system appearance setting', style: TextStyle(fontSize: 12)),
+                                secondary: Icon(Icons.brightness_auto, size: 20),
+                              ),
+                              RadioListTile<ThemeMode>(
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                value: ThemeMode.light,
+                                title: Text('Light'),
+                                subtitle: Text('Clean and bright appearance', style: TextStyle(fontSize: 12)),
+                                secondary: Icon(Icons.light_mode, size: 20, color: Color(0xFFB57C2F)),
+                              ),
+                              RadioListTile<ThemeMode>(
+                                contentPadding: EdgeInsets.zero,
+                                dense: true,
+                                value: ThemeMode.dark,
+                                title: Text('Dark'),
+                                subtitle: Text('Soft dark appearance for night reading', style: TextStyle(fontSize: 12)),
+                                secondary: Icon(Icons.dark_mode, size: 20, color: Color(0xFF7EA9DE)),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -1021,7 +1018,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                       width: 36,
                       height: 4,
                       decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.4),
+                        color: Colors.grey.withValues(alpha: 0.4),
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
@@ -1032,7 +1029,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF2C4D75).withOpacity(0.12),
+                          color: const Color(0xFF2C4D75).withValues(alpha: 0.12),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Icon(Icons.format_size, color: Color(0xFF2C4D75)),
@@ -1106,9 +1103,9 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.4),
+                      color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+                      border: Border.all(color: theme.dividerColor.withValues(alpha: 0.1)),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1191,7 +1188,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                 }
 
                 // Common preset morning times
-                final presets = const [
+                const presets = [
                   TimeOfDay(hour: 6, minute: 30),
                   TimeOfDay(hour: 7, minute: 0),
                   TimeOfDay(hour: 7, minute: 30),
@@ -1210,7 +1207,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                           width: 36,
                           height: 4,
                           decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.4),
+                            color: Colors.grey.withValues(alpha: 0.4),
                             borderRadius: BorderRadius.circular(2),
                           ),
                         ),
@@ -1221,7 +1218,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: theme.colorScheme.primary.withOpacity(0.12),
+                              color: theme.colorScheme.primary.withValues(alpha: 0.12),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(Icons.notifications_active, color: theme.colorScheme.primary),
@@ -1315,8 +1312,8 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: enabled
-                                ? theme.colorScheme.primary.withOpacity(0.12)
-                                : Colors.grey.withOpacity(0.1),
+                                ? theme.colorScheme.primary.withValues(alpha: 0.12)
+                                : Colors.grey.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(
@@ -1333,12 +1330,12 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                           decoration: BoxDecoration(
                             color: enabled
-                                ? theme.colorScheme.primary.withOpacity(0.12)
-                                : Colors.grey.withOpacity(0.1),
+                                ? theme.colorScheme.primary.withValues(alpha: 0.12)
+                                : Colors.grey.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
                               color: enabled
-                                  ? theme.colorScheme.primary.withOpacity(0.3)
+                                  ? theme.colorScheme.primary.withValues(alpha: 0.3)
                                   : Colors.transparent,
                             ),
                           ),
@@ -1374,7 +1371,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
+                          color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
@@ -1469,7 +1466,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                           width: 36,
                           height: 4,
                           decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.4),
+                            color: Colors.grey.withValues(alpha: 0.4),
                             borderRadius: BorderRadius.circular(2),
                           ),
                         ),
@@ -1480,7 +1477,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF2C4D75).withOpacity(0.12),
+                              color: const Color(0xFF2C4D75).withValues(alpha: 0.12),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: const Icon(Icons.offline_pin, color: Color(0xFF2C4D75)),
@@ -1511,6 +1508,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                               onPressed: _isPrefetching
                                   ? null
                                   : () async {
+                                      final messenger = ScaffoldMessenger.of(context);
                                       setSheetState(() => _isPrefetching = true);
                                       setState(() => _isPrefetching = true);
 
@@ -1523,7 +1521,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                                         setSheetState(() => _isPrefetching = false);
                                         setState(() => _isPrefetching = false);
                                         _refreshCachedCount();
-                                        ScaffoldMessenger.of(context).showSnackBar(
+                                        messenger.showSnackBar(
                                           SnackBar(
                                             content: Text('Downloaded $count upcoming days for offline use!'),
                                             behavior: SnackBarBehavior.floating,
@@ -1604,7 +1602,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     selected: isCurrent,
-                                    selectedTileColor: const Color(0xFF2C4D75).withOpacity(0.1),
+                                    selectedTileColor: const Color(0xFF2C4D75).withValues(alpha: 0.1),
                                     leading: Icon(
                                       Icons.calendar_month,
                                       size: 18,
@@ -1657,7 +1655,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.4),
+                    color: Colors.grey.withValues(alpha: 0.4),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -1668,7 +1666,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF2C4D75).withOpacity(0.12),
+                      color: const Color(0xFF2C4D75).withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Icon(Icons.widgets, color: Color(0xFF2C4D75)),
@@ -1706,7 +1704,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                   border: Border.all(color: const Color(0xFF4A6DA7)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.18),
+                      color: Colors.black.withValues(alpha: 0.18),
                       blurRadius: 8,
                       offset: const Offset(0, 3),
                     ),
@@ -1879,7 +1877,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
             Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.18),
+                color: Colors.white.withValues(alpha: 0.18),
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.auto_stories, size: 20, color: Colors.white),
@@ -2052,7 +2050,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
               color: theme.colorScheme.surface,
               border: Border(
                 bottom: BorderSide(
-                  color: theme.dividerColor.withOpacity(0.15),
+                  color: theme.dividerColor.withValues(alpha: 0.15),
                   width: 1,
                 ),
               ),
@@ -2184,8 +2182,8 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
                 color: dailyText.isCached
-                    ? Colors.amber.withOpacity(0.15)
-                    : const Color(0xFF2C4D75).withOpacity(0.12),
+                    ? Colors.amber.withValues(alpha: 0.15)
+                    : const Color(0xFF2C4D75).withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
@@ -2237,7 +2235,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
             side: BorderSide(
-              color: const Color(0xFF2C4D75).withOpacity(0.18),
+              color: const Color(0xFF2C4D75).withValues(alpha: 0.18),
               width: 1,
             ),
           ),
@@ -2340,7 +2338,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
         // Comment Card
         Card(
           elevation: 0,
-          color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.5),
+          color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -2378,7 +2376,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
                 ),
                 if (dailyText.reference.isNotEmpty) ...[
                   const SizedBox(height: 16),
-                  Divider(color: theme.dividerColor.withOpacity(0.1)),
+                  Divider(color: theme.dividerColor.withValues(alpha: 0.1)),
                   const SizedBox(height: 8),
                   Text(
                     dailyText.reference,
@@ -2457,10 +2455,10 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: const Color(0xFF2C4D75).withOpacity(0.06),
+            color: const Color(0xFF2C4D75).withValues(alpha: 0.06),
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
-              color: const Color(0xFF2C4D75).withOpacity(0.12),
+              color: const Color(0xFF2C4D75).withValues(alpha: 0.12),
             ),
           ),
           child: Row(
@@ -2468,7 +2466,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2C4D75).withOpacity(0.14),
+                  color: const Color(0xFF2C4D75).withValues(alpha: 0.14),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(Icons.home_outlined, color: Color(0xFF2C4D75)),
@@ -2536,13 +2534,13 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
         color: theme.colorScheme.surface,
         border: Border(
           top: BorderSide(
-            color: const Color(0xFF2C4D75).withOpacity(0.2),
+            color: const Color(0xFF2C4D75).withValues(alpha: 0.2),
             width: 1.5,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 10,
             offset: const Offset(0, -3),
           ),
@@ -2557,8 +2555,8 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: isPlaying
-                    ? const Color(0xFFB57C2F).withOpacity(0.15)
-                    : const Color(0xFF2C4D75).withOpacity(0.12),
+                    ? const Color(0xFFB57C2F).withValues(alpha: 0.15)
+                    : const Color(0xFF2C4D75).withValues(alpha: 0.12),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -2671,7 +2669,7 @@ class _DailyTextScreenState extends State<DailyTextScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.red.withOpacity(0.1),
+                color: Colors.red.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.cloud_off, size: 40, color: Colors.redAccent),

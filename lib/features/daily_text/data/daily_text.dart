@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 /// A single day's JW daily text: the scripture, its accompanying comment,
 /// publication details, and deep links.
 class DailyText {
