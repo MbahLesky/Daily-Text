@@ -23,6 +23,7 @@ Future<void> main() async {
 
   // Initialize daily reminder notification service
   await NotificationService.instance.initialize();
+  await HomeWidgetService.initialize();
 
   if (!kIsWeb) {
     try {
